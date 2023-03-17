@@ -24,10 +24,10 @@ type Cliente struct {
 	Endereco
 }
 
-func (e Empresa) Desativar() {
+func (e *Empresa) Desativar() {
 	fmt.Printf("A empresa %s desativada\n", e.Nome)
 }
-func (c Cliente) Desativar() {
+func (c *Cliente) Desativar() {
 	c.Ativo = false
 	fmt.Printf("O cliente %s desativado\n", c.Nome)
 }
@@ -39,6 +39,6 @@ func Desativacao(pessoa Pessoa) {
 func main() {
 	luan := Cliente{Nome: "Luan", Idade: 28, Ativo: true, Endereco: Endereco{Logradouro: "Rua Teste", Numero: 45, Cidade: "São Paulo", Estado: "SP"}}
 	minhaEmpresa := Empresa{Nome: "Minha Empresa"}
-	Desativacao(luan)
-	Desativacao(minhaEmpresa)
+	Desativacao(&luan)
+	Desativacao(&minhaEmpresa)
 }
