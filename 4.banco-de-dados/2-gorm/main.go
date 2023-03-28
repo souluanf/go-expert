@@ -26,11 +26,11 @@ func main() {
 	//db.Create(&Product{Name: "Notebook", Price: 2000})
 
 	// create many
-	//db.Create(&[]Product{
-	//	{Name: "Notebook", Price: 2000},
-	//	{Name: "Mouse", Price: 20},
-	//	{Name: "Keyboard", Price: 100},
-	//})
+	db.Create(&[]Product{
+		{Name: "Notebook", Price: 2000},
+		{Name: "Mouse", Price: 20},
+		{Name: "Keyboard", Price: 100},
+	})
 
 	// select one
 	//var product Product
@@ -53,4 +53,16 @@ func main() {
 	for _, product := range products {
 		fmt.Println(product)
 	}
+
+	// update
+	var p Product
+	db.First(&p, 1)
+	p.Name = "New Mouse"
+	db.Save(&p)
+
+	var p2 Product
+	db.First(&p2, 1)
+	fmt.Println(p2)
+	db.Delete(&p2)
+
 }
