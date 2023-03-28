@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
 )
@@ -36,7 +37,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
+	produto, err := selectProdut(db, product.ID)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(produto.Name, produto.Price)
 }
 
 func insertProduto(db *sql.DB, produto *Produto) error {
@@ -63,4 +68,18 @@ func updateProduto(db *sql.DB, produto *Produto) error {
 		return err
 	}
 	return nil
+}
+
+func selectProdut(db *sql.DB, id string) (*Produto, error) {
+	stmt, err := db.Prepare("select * from produtos where id = ?")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	var produto Produto
+	err = stmt.QueryRow(id).Scan(&produto.ID, &produto.Name, &produto.Price)
+	if err != nil {
+		return nil, err
+	}
+	return &produto, nil
 }
