@@ -10,10 +10,11 @@ type Product struct {
 	ID    int     `gorm:"primary_key"`
 	Name  string  `gorm:"type:varchar(100);not null"`
 	Price float64 `gorm:"not null"`
+	gorm.Model
 }
 
 func main() {
-	dsn := "root:root@tcp(localhost:3306)/goexpert"
+	dsn := "root:root@tcp(localhost:3306)/goexpert?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
@@ -26,11 +27,11 @@ func main() {
 	//db.Create(&Product{Name: "Notebook", Price: 2000})
 
 	// create many
-	db.Create(&[]Product{
-		{Name: "Notebook", Price: 2000},
-		{Name: "Mouse", Price: 20},
-		{Name: "Keyboard", Price: 100},
-	})
+	//db.Create(&[]Product{
+	//	{Name: "Notebook", Price: 2000},
+	//	{Name: "Mouse", Price: 20},
+	//	{Name: "Keyboard", Price: 100},
+	//})
 
 	// select one
 	//var product Product
@@ -47,18 +48,18 @@ func main() {
 	//}
 
 	// where
-	var products []Product
-	db.Where("name LIKE ?", "%book%").Find(&products) //Like
-	//db.Where("price > ?", 100).Find(&products)
-	for _, product := range products {
-		fmt.Println(product)
-	}
+	//var products []Product
+	//db.Where("name LIKE ?", "%book%").Find(&products) //Like
+	////db.Where("price > ?", 100).Find(&products)
+	//for _, product := range products {
+	//	fmt.Println(product)
+	//}
 
 	// update
-	var p Product
-	db.First(&p, 1)
-	p.Name = "New Mouse"
-	db.Save(&p)
+	//var p Product
+	//db.First(&p, 1)
+	//p.Name = "New Mouse"
+	//db.Save(&p)
 
 	var p2 Product
 	db.First(&p2, 1)
