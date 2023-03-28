@@ -1,4 +1,4 @@
-module github.com/souluanf/go-expert/4.banco-de-dados/2-gorm
+module github.com/souluanf/go-expert/4.banco-de-dados
 
 go 1.20
 
