@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 // Category has many Products
@@ -28,24 +28,24 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	err = db.AutoMigrate(&Product{}, &Category{})
-	if err != nil {
-		return
-	}
+	db.AutoMigrate(&Product{}, &Category{})
 
+	// create many
 	category1 := Category{Name: "Electronics"}
 	category2 := Category{Name: "Books"}
 	db.Create(&Product{Name: "Notebook", Price: 2000.00, Categories: []Category{category1, category2}})
 
-	var categories []Category
-	err = db.Model(&Category{}).Preload("Products").Find(&categories).Error
+	tx := db.Begin()
+	var c Category
+	err = tx.Debug().Clauses(clause.Locking{Strength: "UPDATE"}).First(&c, 1).Error
 	if err != nil {
 		panic(err)
 	}
-
-	for _, category := range categories {
-		for _, product := range category.Products {
-			fmt.Printf("%s - %s\n", category.Name, product.Name)
-		}
+	c.Name = "FOR UPDATE"
+	err = tx.Debug().Save(&c).Error
+	if err != nil {
+		panic(err)
 	}
+	tx.Commit()
+
 }
