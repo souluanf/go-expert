@@ -56,13 +56,13 @@ func main() {
 
 	// Select category and print products
 	var categories []Category
-	err = db.Model(&Category{}).Preload("Products").Find(&categories).Error
+	err = db.Model(&Category{}).Preload("Products").Preload("Products.SerialNumber").Find(&categories).Error
 	if err != nil {
 		panic(err)
 	}
 	for _, category := range categories {
 		for _, product := range category.Products {
-			fmt.Println(category.Name, product.Name, product.Price)
+			fmt.Println(category.Name, product.Name, product.Price, product.SerialNumber.Number)
 		}
 	}
 
