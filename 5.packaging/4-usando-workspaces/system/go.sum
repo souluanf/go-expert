@@ -1,0 +1,4 @@
+github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
+github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/souluanf/go-expert/5.packaging/3-trabalhando-com-go-mod-replace/math v0.0.0-20230329233945-516d313bab40 h1:9VDJTEHHJor5B0QUTh6T/zRRevd8FdGn+wktgfUU4j0=
+github.com/souluanf/go-expert/5.packaging/3-trabalhando-com-go-mod-replace/math v0.0.0-20230329233945-516d313bab40/go.mod h1:bX9yl5Jt5SqrTsesRzNL1gwHImb1F7697Yb6eUQIaQQ=
