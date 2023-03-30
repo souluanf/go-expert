@@ -20,12 +20,22 @@ go tool cover -html=coverage.out
 go test -bench=.
 ```
 
-#### rodando benchmark sem os testes
+#### Rodando benchmark sem os testes
 ```shell
 go test -bench=. -run=^#
 ```
 
-#### rodando benchmark sem os testes 10 vezes
+#### Rodando benchmark sem os testes 10 vezes
 ```shell
 go test -bench=. -run=^# -count=10
+```
+
+#### rodar fuzzing
+```shell
+go test -fuzz=.
+```
+
+#### rodar fuzzing com tempo
+```shell
+go test -fuzz=. -fuzztime=10s
 ```
