@@ -24,7 +24,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	http.ListenAndServe("localhost:8080", nil)
+
+	productDB := database.NewProduct(db)
+	productHandler := NewProductHandler(productDB)
+
+	http.HandleFunc("/products", productHandler.CreateProduct)
+	err = http.ListenAndServe("localhost:8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 type ProductHandler struct {
@@ -54,4 +62,5 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	w.WriteHeader(http.StatusCreated)
 }
