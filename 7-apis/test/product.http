@@ -23,6 +23,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvdWx1YW5mQGljbG91ZC5jb20iLCJleHAiOjE2ODA3MzE3MDAsInN1YiI6IjRjNzJmNTMzLTg2MzYtNGJjZi04MWMwLWM1NWI4Njc4ZWVhYiJ9.9KZVbSQkUmrXGBrSHvCAxJFY-ItK8KXwXboYk2uZ5x4
 
 ###
 GET http://localhost:8080/products?page=1&limit=2&sort=asc
