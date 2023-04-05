@@ -10,11 +10,12 @@ import (
 	"github.com/souluanf/go-expert/7-apis/internal/infra/webserver/handlers"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 )
 
 func main() {
-	configs, err := configs.LoadConfig(".")
+	config, err := configs.LoadConfig(".")
 	if err != nil {
 		panic(err)
 	}
@@ -31,13 +32,18 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDB)
 
 	userDB := database.NewUser(db)
-	userHandler := handlers.NewUserHandler(userDB, configs.TokenAuth, configs.JWTExpiresIn)
+	userHandler := handlers.NewUserHandler(userDB)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.WithValue("jwt", config.TokenAuth))
+	r.Use(middleware.WithValue("JwtExpiresIn", config.JWTExpiresIn))
 
+	//r.Use(LogRequest)// Middleware criado por mim
 	r.Route("/products", func(c chi.Router) {
-		c.Use(jwtauth.Verifier(configs.TokenAuth))
+
+		c.Use(jwtauth.Verifier(config.TokenAuth))
 		c.Use(jwtauth.Authenticator)
 		c.Get("/", productHandler.GetProducts)
 		c.Post("/", productHandler.CreateProduct)
@@ -55,4 +61,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func LogRequest(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Request: %s %s", r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
+
 }
