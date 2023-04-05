@@ -6,6 +6,14 @@ Content-Type: application/json
   "email": "souluanf@icloud.com",
   "password": "123456"
 }
+###
+POST http://localhost:8080/users/generate_token HTTP/1.1
+Content-Type: application/json
+
+{
+"email": "souluanf@icloud.com",
+"password": "123456"
+}
 
 ###
 GET http://localhost:8080/products/90083dee-3d26-4557-8ad5-3c017d9f809c
