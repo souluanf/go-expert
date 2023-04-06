@@ -14,6 +14,28 @@ import (
 	"net/http"
 )
 
+// @title           Products API
+// @version         1.0
+// @description     Demo para aprendizado de APIs com Go
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   Luan Fernandes
+// @contact.url    https://luanfernandes.dev
+// @contact.email  hello@luanfernandes.dev
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /
+
+// @securityDefinitions.apiKey  ApiKeyAuth
+// @in  header
+// @name  Authorization
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
+
 func main() {
 	config, err := configs.LoadConfig(".")
 	if err != nil {
