@@ -5,9 +5,11 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/jwtauth"
 	"github.com/souluanf/go-expert/7-apis/configs"
+	_ "github.com/souluanf/go-expert/7-apis/docs"
 	"github.com/souluanf/go-expert/7-apis/internal/entity"
 	"github.com/souluanf/go-expert/7-apis/internal/infra/database"
 	"github.com/souluanf/go-expert/7-apis/internal/infra/webserver/handlers"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
@@ -78,6 +80,8 @@ func main() {
 		c.Post("/", userHandler.Create)
 		c.Post("/generate_token", userHandler.GetJWT)
 	})
+
+	r.Get("/docs/*", httpSwagger.Handler(httpSwagger.URL("http://localhost:8080/docs/doc.json")))
 
 	err = http.ListenAndServe("localhost:8080", r)
 	if err != nil {
