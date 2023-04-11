@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type Error struct {
+	Message string `json:"message"`
+}
+
 type UserHandler struct {
 	UserDB database.UserInterface
 }
@@ -52,6 +56,16 @@ func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(accessToken)
 }
 
+// Create user
+// @Summary      Create user
+// @Description  Create user
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        request   body      dto.CreateUserInput   true  "user request"
+// @Success      201
+// @Failure      500  {object}  Error
+// @Router       /users [post]
 func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var user dto.CreateUserInput
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -62,11 +76,15 @@ func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	p, err := entity.NewUser(user.Name, user.Email, user.Password)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		badError := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(badError)
 		return
 	}
 	err = h.UserDB.Create(p)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		internalError := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(internalError)
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
