@@ -25,8 +25,8 @@ func NewUserHandler(userDB database.UserInterface) *UserHandler {
 }
 
 // GetJWT get jwt
-// @Summary      get user JWT
-// @Description  get user JWT
+// @Summary      get user jwt
+// @Description  get user jwt
 // @Tags         users
 // @Accept       json
 // @Produce      json
@@ -66,8 +66,8 @@ func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create user
-// @Summary      Create user
-// @Description  Create user
+// @Summary      create user
+// @Description  create user
 // @Tags         users
 // @Accept       json
 // @Produce      json
