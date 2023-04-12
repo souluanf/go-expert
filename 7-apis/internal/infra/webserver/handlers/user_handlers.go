@@ -24,6 +24,17 @@ func NewUserHandler(userDB database.UserInterface) *UserHandler {
 	}
 }
 
+// GetJWT get jwt
+// @Summary      get user JWT
+// @Description  get user JWT
+// @Tags         users
+// @Accept       json
+// @Produce      json
+// @Param        request   body      dto.GetJWTInput   true  "user credentials"
+// @Success      200  {object}  dto.GetJWTOutput
+// @Failure      404  {object}  Error
+// @Failure      500  {object}  Error
+// @Router       /users/generate_token [post]
 func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 	jwt := r.Context().Value("jwt").(*jwtauth.JWTAuth)
 	JwtExpiresIn := r.Context().Value("JwtExpiresIn").(int)
@@ -35,23 +46,21 @@ func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 	}
 	p, err := h.UserDB.FindByEmail(user.Email)
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
+		w.WriteHeader(http.StatusNotFound)
+		err := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(err)
 		return
 	}
 	if !p.ValidatePassword(user.Password) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-	_, token, _ := jwt.Encode(map[string]interface{}{
+	_, tokenString, _ := jwt.Encode(map[string]interface{}{
 		"sub":   p.ID.String(),
 		"exp":   time.Now().Add(time.Second * time.Duration(JwtExpiresIn)).Unix(),
 		"email": p.Email,
 	})
-	accessToken := struct {
-		AccessToken string `json:"access_token"`
-	}{
-		AccessToken: token,
-	}
+	accessToken := dto.GetJWTOutput{AccessToken: tokenString}
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(accessToken)
 }
