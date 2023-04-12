@@ -21,6 +21,17 @@ func NewProductHandler(db database.ProductInterface) *ProductHandler {
 	}
 }
 
+// CreateProduct create product
+// @Summary      create product
+// @Description  create product
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Param        request   body      dto.CreateProductInput   true  "product request"
+// @Success      201
+// @Failure      500  {object}  Error
+// @Router       /products [post]
+// @Security     ApiKeyAuth
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var product dto.CreateProductInput
 	err := json.NewDecoder(r.Body).Decode(&product)
@@ -41,6 +52,19 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// GetProducts list products
+// @Summary      list products
+// @Description  get all products
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Param        page   query      string   false  "page"
+// @Param        limit   query      string   false  "limit"
+// @Success      200  {array}  entity.Product
+// @Failure      404  {object}  Error
+// @Failure      500  {object}  Error
+// @Router       /products [get]
+// @Security     ApiKeyAuth
 func (h *ProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 	page := r.URL.Query().Get("page")
 	limit := r.URL.Query().Get("limit")
