@@ -1,23 +1,29 @@
 ### Subir database
+
 ```shell
 docker compose up -d
 ```
 
 #### Acessar database
+
 ```shell
 docker exec -it mysql mysql -u root -p
 ```
 
-####  Select database 
+#### Select database
+
 ```mysql
 use goexpert;
 ```
 
 #### Create table
+
 ```mysql
 create table produtos (id varchar(255) not null,name varchar(80) not null,preco decimal(10,2) not null,primary key (id));
 ```
-#### Create 2 tables 
+
+#### Create 2 tables
+
 ```mysql
 create table if not exists categories(
     id   bigint auto_increment primary key,
@@ -39,6 +45,7 @@ create index idx_products_deleted_at on goexpert.products (deleted_at);
 ```
 
 #### Select
+
 ```mysql
 select p.id         as id,
        p.name       as name,

@@ -9,12 +9,12 @@
     </thead>
     <tbody>
     {{ range . }}
-        {{ if eq .CargaHoraria  120 }}
-            <tr>
-                <td>{{ .Nome | ToUpper }}</td>
-                <td>{{ .CargaHoraria }}</td>
-            </tr>
-        {{ end }}
+    {{ if eq .CargaHoraria 120 }}
+    <tr>
+        <td>{{ .Nome | ToUpper }}</td>
+        <td>{{ .CargaHoraria }}</td>
+    </tr>
+    {{ end }}
     {{ end }}
 </table>
 {{ template "footer.html" }}

@@ -64,19 +64,19 @@ paths:
   /products:
     get:
       consumes:
-      - application/json
+        - application/json
       description: get all products
       parameters:
-      - description: page
-        in: query
-        name: page
-        type: string
-      - description: limit
-        in: query
-        name: limit
-        type: string
+        - description: page
+          in: query
+          name: page
+          type: string
+        - description: limit
+          in: query
+          name: limit
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -93,23 +93,23 @@ paths:
           schema:
             $ref: '#/definitions/handlers.Error'
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: [ ]
       summary: list products
       tags:
-      - products
+        - products
     post:
       consumes:
-      - application/json
+        - application/json
       description: create product
       parameters:
-      - description: product request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.CreateProductInput'
+        - description: product request
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/dto.CreateProductInput'
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
@@ -118,24 +118,24 @@ paths:
           schema:
             $ref: '#/definitions/handlers.Error'
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: [ ]
       summary: create product
       tags:
-      - products
+        - products
   /products/{id}:
     delete:
       consumes:
-      - application/json
+        - application/json
       description: delete product
       parameters:
-      - description: product id
-        format: uuid
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: product id
+          format: uuid
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
@@ -144,23 +144,23 @@ paths:
           schema:
             $ref: '#/definitions/handlers.Error'
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: [ ]
       summary: delete product
       tags:
-      - products
+        - products
     get:
       consumes:
-      - application/json
+        - application/json
       description: get product by id
       parameters:
-      - description: product id
-        format: uuid
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: product id
+          format: uuid
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -173,29 +173,29 @@ paths:
           schema:
             $ref: '#/definitions/handlers.Error'
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: [ ]
       summary: get product by id
       tags:
-      - products
+        - products
     put:
       consumes:
-      - application/json
+        - application/json
       description: update product
       parameters:
-      - description: product id
-        format: uuid
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: product request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.CreateProductInput'
+        - description: product id
+          format: uuid
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: product request
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/dto.CreateProductInput'
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
@@ -204,24 +204,24 @@ paths:
           schema:
             $ref: '#/definitions/handlers.Error'
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: [ ]
       summary: update product
       tags:
-      - products
+        - products
   /users:
     post:
       consumes:
-      - application/json
+        - application/json
       description: create user
       parameters:
-      - description: user request
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.CreateUserInput'
+        - description: user request
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/dto.CreateUserInput'
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
@@ -231,21 +231,21 @@ paths:
             $ref: '#/definitions/handlers.Error'
       summary: create user
       tags:
-      - users
+        - users
   /users/generate_token:
     post:
       consumes:
-      - application/json
+        - application/json
       description: get user jwt
       parameters:
-      - description: user credentials
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.GetJWTInput'
+        - description: user credentials
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/dto.GetJWTInput'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -261,7 +261,7 @@ paths:
             $ref: '#/definitions/handlers.Error'
       summary: get user jwt
       tags:
-      - users
+        - users
 securityDefinitions:
   ApiKeyAuth:
     in: header
