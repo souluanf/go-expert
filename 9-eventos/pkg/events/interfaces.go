@@ -1,15 +1,18 @@
 package events
 
-import "time"
+import (
+	"sync"
+	"time"
+)
 
 type EventInterface interface {
 	GetName() string
-	GetData() time.Time
+	GetDateTime() time.Time
 	GetPayload() interface{}
 }
 
 type EventHandlerInterface interface {
-	Handle(event EventInterface)
+	Handle(event EventInterface, wg *sync.WaitGroup)
 }
 
 type EventDispatcherInterface interface {
