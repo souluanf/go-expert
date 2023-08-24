@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"github.com/souluanf/lfutils/pkg/rabbitmq"
+	"github.com/souluanf/lfutils-go/pkg/rabbitmq"
 )
 
 func main() {

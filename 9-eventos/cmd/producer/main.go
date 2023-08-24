@@ -1,6 +1,6 @@
 package main
 
-import "github.com/souluanf/lfutils/pkg/rabbitmq"
+import "github.com/souluanf/lfutils-go/pkg/rabbitmq"
 
 func main() {
 	ch, err := rabbitmq.OpenChannel()

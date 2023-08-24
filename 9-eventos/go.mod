@@ -1,4 +1,4 @@
-module github.com/souluanf/lfutils
+module github.com/souluanf/lfutils-go
 
 go 1.20
 

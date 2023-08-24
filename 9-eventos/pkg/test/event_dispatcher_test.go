@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/souluanf/lfutils/pkg/events"
+	"github.com/souluanf/lfutils-go/pkg/events"
 	"sync"
 	"testing"
 	"time"
