@@ -12,7 +12,6 @@ type Course {
     category: Category!
 }
 
-
 input NewCategory {
     name: String!
     description: String
