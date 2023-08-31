@@ -11,14 +11,22 @@ import (
 	"github.com/souluanf/fullcycle-graphql/graph/model"
 )
 
-// AddCategory is the resolver for the addCategory field.
-func (r *mutationResolver) AddCategory(ctx context.Context, category model.NewCategory) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented: AddCategory - addCategory"))
+// CreateCategory is the resolver for the createCategory field.
+func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error) {
+	category, err := r.CategoryDB.Create(input.Name, *input.Description)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Category{
+		ID:          category.Id,
+		Name:        category.Name,
+		Description: &category.Description,
+	}, nil
 }
 
-// AddCourse is the resolver for the addCourse field.
-func (r *mutationResolver) AddCourse(ctx context.Context, course model.NewCourse) (*model.Course, error) {
-	panic(fmt.Errorf("not implemented: AddCourse - addCourse"))
+// CreateCourse is the resolver for the createCourse field.
+func (r *mutationResolver) CreateCourse(ctx context.Context, course model.NewCourse) (*model.Course, error) {
+	panic(fmt.Errorf("not implemented: CreateCourse - createCourse"))
 }
 
 // Categories is the resolver for the categories field.

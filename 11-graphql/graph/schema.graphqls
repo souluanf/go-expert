@@ -29,7 +29,7 @@ type Query {
 }
 
 type Mutation {
-    addCategory(category: NewCategory!): Category!
-    addCourse(course: NewCourse!): Course!
+    createCategory(category: NewCategory!): Category!
+    createCourse(course: NewCourse!): Course!
 }
 

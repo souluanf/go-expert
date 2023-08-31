@@ -60,8 +60,8 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCategory func(childComplexity int, category model.NewCategory) int
-		AddCourse   func(childComplexity int, course model.NewCourse) int
+		CreateCategory func(childComplexity int, category model.NewCategory) int
+		CreateCourse   func(childComplexity int, course model.NewCourse) int
 	}
 
 	Query struct {
@@ -71,8 +71,8 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	AddCategory(ctx context.Context, category model.NewCategory) (*model.Category, error)
-	AddCourse(ctx context.Context, course model.NewCourse) (*model.Course, error)
+	CreateCategory(ctx context.Context, category model.NewCategory) (*model.Category, error)
+	CreateCourse(ctx context.Context, course model.NewCourse) (*model.Course, error)
 }
 type QueryResolver interface {
 	Categories(ctx context.Context) ([]*model.Category, error)
@@ -150,29 +150,29 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Course.Name(childComplexity), true
 
-	case "Mutation.addCategory":
-		if e.complexity.Mutation.AddCategory == nil {
+	case "Mutation.createCategory":
+		if e.complexity.Mutation.CreateCategory == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_addCategory_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_createCategory_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddCategory(childComplexity, args["category"].(model.NewCategory)), true
+		return e.complexity.Mutation.CreateCategory(childComplexity, args["category"].(model.NewCategory)), true
 
-	case "Mutation.addCourse":
-		if e.complexity.Mutation.AddCourse == nil {
+	case "Mutation.createCourse":
+		if e.complexity.Mutation.CreateCourse == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_addCourse_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_createCourse_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddCourse(childComplexity, args["course"].(model.NewCourse)), true
+		return e.complexity.Mutation.CreateCourse(childComplexity, args["course"].(model.NewCourse)), true
 
 	case "Query.categories":
 		if e.complexity.Query.Categories == nil {
@@ -314,7 +314,7 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
-func (ec *executionContext) field_Mutation_addCategory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createCategory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.NewCategory
@@ -329,7 +329,7 @@ func (ec *executionContext) field_Mutation_addCategory_args(ctx context.Context,
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_addCourse_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createCourse_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.NewCourse
@@ -763,8 +763,8 @@ func (ec *executionContext) fieldContext_Course_category(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_addCategory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addCategory(ctx, field)
+func (ec *executionContext) _Mutation_createCategory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createCategory(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -777,7 +777,7 @@ func (ec *executionContext) _Mutation_addCategory(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().AddCategory(rctx, fc.Args["category"].(model.NewCategory))
+		return ec.resolvers.Mutation().CreateCategory(rctx, fc.Args["category"].(model.NewCategory))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -794,7 +794,7 @@ func (ec *executionContext) _Mutation_addCategory(ctx context.Context, field gra
 	return ec.marshalNCategory2ᚖgithubᚗcomᚋsouluanfᚋfullcycleᚑgraphqlᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -821,15 +821,15 @@ func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Contex
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addCategory_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createCategory_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_addCourse(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addCourse(ctx, field)
+func (ec *executionContext) _Mutation_createCourse(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createCourse(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -842,7 +842,7 @@ func (ec *executionContext) _Mutation_addCourse(ctx context.Context, field graph
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().AddCourse(rctx, fc.Args["course"].(model.NewCourse))
+		return ec.resolvers.Mutation().CreateCourse(rctx, fc.Args["course"].(model.NewCourse))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -859,7 +859,7 @@ func (ec *executionContext) _Mutation_addCourse(ctx context.Context, field graph
 	return ec.marshalNCourse2ᚖgithubᚗcomᚋsouluanfᚋfullcycleᚑgraphqlᚋgraphᚋmodelᚐCourse(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_addCourse(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createCourse(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -886,7 +886,7 @@ func (ec *executionContext) fieldContext_Mutation_addCourse(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addCourse_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createCourse_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -3117,16 +3117,16 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "addCategory":
+		case "createCategory":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addCategory(ctx, field)
+				return ec._Mutation_createCategory(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "addCourse":
+		case "createCourse":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addCourse(ctx, field)
+				return ec._Mutation_createCourse(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
