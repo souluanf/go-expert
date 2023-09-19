@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/souluanf/fullcycle-grpc/internal/database"
 	"github.com/souluanf/fullcycle-grpc/internal/pb"
 	"github.com/souluanf/fullcycle-grpc/internal/service"
