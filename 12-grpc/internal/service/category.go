@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/souluanf/fullcycle-grpc/internal/database"
 	"github.com/souluanf/fullcycle-grpc/internal/pb"
+	"io"
 )
 
 type CategoryService struct {
@@ -57,4 +58,27 @@ func (c *CategoryService) GetCategory(ctx context.Context, in *pb.CategoryGetReq
 		Description: category.Description,
 	}
 	return categoryResponse, nil
+}
+
+func (c *CategoryService) CreateCategoryStream(stream pb.CategoryService_CreateCategoryStreamServer) error {
+	categories := &pb.CategoryList{}
+
+	for {
+		category, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(categories)
+		}
+		if err != nil {
+			return err
+		}
+		categoryResponse, err := c.CategoryDB.Create(category.Name, category.Description)
+		if err != nil {
+			return err
+		}
+		categories.Categories = append(categories.Categories, &pb.Category{
+			Id:          categoryResponse.ID,
+			Name:        categoryResponse.Name,
+			Description: categoryResponse.Description,
+		})
+	}
 }
