@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"io"
 	"os"
 )
 
@@ -38,6 +39,17 @@ func main() {
 		panic(err)
 	}
 	defer dir.Close()
+	for {
+		files, err := dir.Readdir(1)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			fmt.Printf("Error reading directory: %s\n", err)
+			continue
+		}
+		uploadFileToS3(files[0].Name())
+	}
 }
 
 func uploadFileToS3(filename string) {
@@ -45,7 +57,7 @@ func uploadFileToS3(filename string) {
 	fmt.Printf("Uploading file %s to S3 bucket %s\n", completeFilename, s3Bucket)
 	file, err := os.Open(completeFilename)
 	if err != nil {
-		fmt.Sprintf("Error opening file %s\n", completeFilename)
+		fmt.Printf("Error opening file %s\n", completeFilename)
 		return
 	}
 	defer file.Close()
