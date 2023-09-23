@@ -14,3 +14,8 @@ cobra-cli init
 ```bash
 cobra-cli add [command-name]
 ```
+
+### 4. Create a new subcommand
+```bash
+ cobra-cli add create -p 'categoryCmd'
+```
