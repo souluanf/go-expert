@@ -21,3 +21,7 @@ where id = ?;
 delete
 from categories
 where id = ?;
+
+-- name: CreateCourse :exec
+insert into courses (id, name, description, category_id)
+values (?, ?, ?, ?);
