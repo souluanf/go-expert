@@ -14,3 +14,8 @@ migrate -path sql/migrations -database "mysql://root:root@tcp(localhost:3306)/co
 ```bash
 migrate -path sql/migrations -database "mysql://root:root@tcp(localhost:3306)/courses" -verbose down
 ```
+
+## Generate sqlc
+```bash
+sqlc generate
+```
