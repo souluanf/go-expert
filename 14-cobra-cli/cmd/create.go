@@ -24,7 +24,6 @@ to quickly create a Cobra application.`,
 
 func init() {
 	categoryCmd.AddCommand(createCmd)
-	categoryCmd.PersistentFlags().String("name", "", "Category name")
 
 	// Here you will define your flags and configuration settings.
 
