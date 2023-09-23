@@ -7,7 +7,7 @@ services:
     platform: linux/arm64/v8
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: goexpert
+      MYSQL_DATABASE: courses
       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
