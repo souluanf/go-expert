@@ -8,11 +8,13 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"io"
 	"os"
+	"sync"
 )
 
 var (
 	s3Client *s3.S3
 	s3Bucket string
+	wg       sync.WaitGroup
 )
 
 func init() {
@@ -48,11 +50,14 @@ func main() {
 			fmt.Printf("Error reading directory: %s\n", err)
 			continue
 		}
-		uploadFileToS3(files[0].Name())
+		wg.Add(1)
+		go uploadFileToS3(files[0].Name())
 	}
+	wg.Wait()
 }
 
 func uploadFileToS3(filename string) {
+	defer wg.Done()
 	completeFilename := fmt.Sprintf("./tmp/%s", filename)
 	fmt.Printf("Uploading file %s to S3 bucket %s\n", completeFilename, s3Bucket)
 	file, err := os.Open(completeFilename)
