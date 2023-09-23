@@ -22,6 +22,15 @@ to quickly create a Cobra application.`,
 		fmt.Println("exists", exists)
 		fmt.Println("id", id)
 	},
+	PreRun: func(cmd *cobra.Command, args []string) {
+		fmt.Println("called before run")
+	},
+	PostRun: func(cmd *cobra.Command, args []string) {
+		fmt.Println("called after run")
+	},
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return fmt.Errorf("called run with error")
+	},
 }
 
 var category string
