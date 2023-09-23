@@ -41,6 +41,8 @@ func main() {
 		panic(err)
 	}
 	defer dir.Close()
+	uploadControl := make(chan struct{}, 100)
+
 	for {
 		files, err := dir.Readdir(1)
 		if err != nil {
@@ -51,18 +53,20 @@ func main() {
 			continue
 		}
 		wg.Add(1)
-		go uploadFileToS3(files[0].Name())
+		uploadControl <- struct{}{}
+		go uploadFileToS3(files[0].Name(), uploadControl)
 	}
 	wg.Wait()
 }
 
-func uploadFileToS3(filename string) {
+func uploadFileToS3(filename string, uploadControl <-chan struct{}) {
 	defer wg.Done()
 	completeFilename := fmt.Sprintf("./tmp/%s", filename)
 	fmt.Printf("Uploading file %s to S3 bucket %s\n", completeFilename, s3Bucket)
 	file, err := os.Open(completeFilename)
 	if err != nil {
 		fmt.Printf("Error opening file %s\n", completeFilename)
+		<-uploadControl
 		return
 	}
 	defer file.Close()
@@ -73,8 +77,10 @@ func uploadFileToS3(filename string) {
 	})
 	if err != nil {
 		fmt.Printf("Error uploading file %s\n", completeFilename)
+		<-uploadControl
 		return
 	}
 	fmt.Printf("File %s uploaded successfully\n", completeFilename)
+	<-uploadControl
 
 }
