@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/google/uuid v1.3.1
 	github.com/mattn/go-sqlite3 v1.14.17
-	google.golang.org/grpc v1.58.1
+	google.golang.org/grpc v1.58.3
 	google.golang.org/protobuf v1.31.0
 )
 
